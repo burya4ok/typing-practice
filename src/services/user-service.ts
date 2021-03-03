@@ -25,23 +25,20 @@ export default class UserService {
     return import("../mocks/users.json");
   }
 
-  async updateUserRole<R extends Role>(
-    user: Readonly<RoleToUser[R]>,
-    newRole: R
-  ) {
+  async updateUserRole<R extends Role>(user: Readonly<RoleToUser[R]>, newRole: R) {
     const User = this.getConstructorByRole(newRole);
     this.users = this.users.map((u) => (u.id === user.id ? User.from(u) : u));
     return this.users;
   }
 
-  getAvailableOperations(user: User, currenUser: User): Operation[] {
+  getAvailableOperations(user: User, currentUser: User): Operation[] {
     // Вам нужно поменять логику внутри getAvailableOperations для того, что бы это работало с логином
-    throw new Error("Not Implemented")
-    // if (user instanceof Admin || user instanceof Client) {
-    //   return [Operation.UPDATE_TO_MODERATOR];
-    // }
+    // throw new Error("Not Implemented")
+    if (user instanceof Admin || user instanceof Client) {
+      return [Operation.UPDATE_TO_MODERATOR];
+    }
 
-    // return [Operation.UPDATE_TO_CLIENT, Operation.UPDATE_TO_ADMIN];
+    return [Operation.UPDATE_TO_CLIENT, Operation.UPDATE_TO_ADMIN];
   }
 
   getConstructorByRole(role: Role) {

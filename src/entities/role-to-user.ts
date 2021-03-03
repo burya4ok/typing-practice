@@ -4,7 +4,7 @@ import type { Client } from "./client";
 import type { Moderator } from "./moderator";
 
 export type RoleToUser = {
-  [Role.ADMIN]: Moderator, 
-  [Role.CLIENT]: Moderator, 
-  [Role.MODERATOR]: Client | Admin, 
-}
+  [Role.ADMIN]: Moderator;
+  [Role.CLIENT]: Moderator;
+  [Role.MODERATOR]: Client | Admin;
+};

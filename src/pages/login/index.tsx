@@ -15,12 +15,7 @@ export default function Login(_: RouteComponentProps) {
     <Layout className="full-page login">
       <Card size="small" className="login-container">
         <Typography.Title>Login</Typography.Title>
-        <Form
-          name="normal_login"
-          className="login-form"
-          initialValues={{ remember: true }}
-          onFinish={setCredentials}
-        >
+        <Form name="normal_login" className="login-form" initialValues={{ remember: true }} onFinish={setCredentials}>
           <Form.Item
             name="email"
             rules={[
@@ -30,10 +25,7 @@ export default function Login(_: RouteComponentProps) {
               },
             ]}
           >
-            <Input
-              prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Email"
-            />
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
           </Form.Item>
           <Form.Item
             name="password"
@@ -44,18 +36,10 @@ export default function Login(_: RouteComponentProps) {
               },
             ]}
           >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
-              placeholder="Password"
-            />
+            <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
           </Form.Item>
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-            >
+            <Button type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
           </Form.Item>

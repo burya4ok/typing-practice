@@ -20,12 +20,7 @@ export class Moderator extends AccountInfo {
   private readonly _type = Symbol("Moderator");
   public readonly role = Role.MODERATOR;
 
-  protected constructor(
-    id: string,
-    name: string,
-    email: string,
-    password: string
-  ) {
+  protected constructor(id: string, name: string, email: string, password: string) {
     super(id, name, email, password);
   }
 }

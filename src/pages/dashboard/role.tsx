@@ -1,8 +1,8 @@
 import { Tag } from "antd";
 
 type RoleProps = {
-  role: string,
-}
+  role: string;
+};
 
 export default function Role({ role }: RoleProps) {
   const color = getRoleColor(role);
@@ -14,10 +14,14 @@ export default function Role({ role }: RoleProps) {
 }
 
 function getRoleColor(role: string): string {
-  switch(role) {
-    case "client": return "green";
-    case "moderator": return "volcano";
-    case "admin": return "geekblue";
-    default: return "";
+  switch (role) {
+    case "client":
+      return "green";
+    case "moderator":
+      return "volcano";
+    case "admin":
+      return "geekblue";
+    default:
+      return "";
   }
 }

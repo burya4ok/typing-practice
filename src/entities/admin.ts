@@ -12,12 +12,7 @@ export class Admin extends AccountInfo {
 
   static from(obj: object): Admin {
     if (AccountInfo.is(obj)) {
-      return new Admin(
-        obj.id,
-        obj.name,
-        obj.email,
-        obj.password,
-      );
+      return new Admin(obj.id, obj.name, obj.email, obj.password);
     }
     throw new TypeError("Object is not Admin");
   }
@@ -25,12 +20,7 @@ export class Admin extends AccountInfo {
   private readonly _type = Symbol("Admin");
   public readonly role = Role.ADMIN;
 
-  protected constructor(
-    id: string,
-    name: string,
-    email: string,
-    password: string
-  ) {
+  protected constructor(id: string, name: string, email: string, password: string) {
     super(id, name, email, password);
   }
 }

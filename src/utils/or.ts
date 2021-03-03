@@ -1,4 +1,4 @@
-type Factory<A, R> = { of(value: A): R }
+type Factory<A, R> = { of(value: A): R };
 
 export default function or<I, A, B>(a: Factory<I, A>, b: Factory<I, B>) {
   return (value: I): A | B => {

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { LogedInUser } from "../providers/loged-in-user";
 import type { User } from "../entities/user";
-import {navigate} from "@reach/router";
+import { navigate } from "@reach/router";
 
 export default function useCurrentUser(): User | null {
   const { state: { user } = { user: null } } = useContext(LogedInUser);
@@ -10,4 +10,3 @@ export default function useCurrentUser(): User | null {
   }
   return user;
 }
-

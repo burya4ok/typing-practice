@@ -10,7 +10,7 @@ const operationService = new OperationService(userService);
 const Services = createContext({
   userService,
   loginService,
-  operationService
+  operationService,
 });
 
 export default Services;

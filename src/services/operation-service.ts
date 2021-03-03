@@ -25,46 +25,35 @@ export default class OperationService {
     }
 
     if (this.isUpdateToClientOperation(operation)) {
-      return this.runUpdateToClientOperation(Moderator.of(user)); }
+      return this.runUpdateToClientOperation(Moderator.of(user));
+    }
 
     return this.runUpdateToAdminOperation(Moderator.of(user));
   }
 
-  isUpdateToAdminOperation(
-    operation: Operation
-  ): operation is Operation.UPDATE_TO_ADMIN {
+  isUpdateToAdminOperation(operation: Operation): operation is Operation.UPDATE_TO_ADMIN {
     return operation === Operation.UPDATE_TO_ADMIN;
   }
 
-  isUpdateToClientOperation(
-    operation: Operation
-  ): operation is Operation.UPDATE_TO_CLIENT {
+  isUpdateToClientOperation(operation: Operation): operation is Operation.UPDATE_TO_CLIENT {
     return operation === Operation.UPDATE_TO_CLIENT;
   }
 
-  isUpdateToModeratorOperation(
-    operation: Operation
-  ): operation is Operation.UPDATE_TO_MODERATOR {
+  isUpdateToModeratorOperation(operation: Operation): operation is Operation.UPDATE_TO_MODERATOR {
     return operation === Operation.UPDATE_TO_MODERATOR;
   }
 
-  private runUpdateToAdminOperation(
-    user: UserForOperation<Operation.UPDATE_TO_ADMIN>
-  ) {
+  private runUpdateToAdminOperation(user: UserForOperation<Operation.UPDATE_TO_ADMIN>) {
     const newRole = this.getNewRoleByOperation(Operation.UPDATE_TO_ADMIN);
     return this.userService.updateUserRole(user, newRole);
   }
 
-  private runUpdateToClientOperation(
-    user: UserForOperation<Operation.UPDATE_TO_CLIENT>
-  ) {
+  private runUpdateToClientOperation(user: UserForOperation<Operation.UPDATE_TO_CLIENT>) {
     const newRole = this.getNewRoleByOperation(Operation.UPDATE_TO_CLIENT);
     return this.userService.updateUserRole(user, newRole);
   }
 
-  private runUpdateToModeratorOperation(
-    user: UserForOperation<Operation.UPDATE_TO_MODERATOR>
-  ) {
+  private runUpdateToModeratorOperation(user: UserForOperation<Operation.UPDATE_TO_MODERATOR>) {
     const newRole = this.getNewRoleByOperation(Operation.UPDATE_TO_MODERATOR);
     return this.userService.updateUserRole(user, newRole);
   }

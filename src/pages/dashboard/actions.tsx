@@ -15,11 +15,7 @@ export default function Actions({ user, currentUser, onAction }: ActionsProps) {
   const menu = (
     <Menu>
       {operations.map((operation, key) => (
-        <Menu.Item
-          key={key}
-          icon={<UserOutlined />}
-          onClick={() => onAction(operation)}
-        >
+        <Menu.Item key={key} icon={<UserOutlined />} onClick={() => onAction(operation)}>
           {operation}
         </Menu.Item>
       ))}

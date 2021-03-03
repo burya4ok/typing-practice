@@ -41,9 +41,5 @@ function logedInReducer(state: LogedInUserState, action: LogedInAction) {
 
 export function LogedInProvider({ children }: LogedInProviderProps) {
   const [state, dispatch] = useReducer(logedInReducer, initialState);
-  return (
-    <LogedInUser.Provider value={{ dispatch, state }}>
-      {children}
-    </LogedInUser.Provider>
-  );
+  return <LogedInUser.Provider value={{ dispatch, state }}>{children}</LogedInUser.Provider>;
 }
