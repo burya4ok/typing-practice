@@ -16,7 +16,7 @@ export default function useLogin(credentials: Credentials | null): User | null {
   const { dispatch, state = { user: null } } = useContext(LogedInUser);
 
   const accessByRoleCheck = useCallback((user: User): User => {
-    if (Client.of(user)) {
+    if (Client.check(user)) {
       throw new Error("Client doesn`t have access to the dashboard");
     }
 

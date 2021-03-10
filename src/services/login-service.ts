@@ -1,8 +1,4 @@
-import { Admin } from "../entities/admin";
-import { Client } from "../entities/client";
-import { Moderator } from "../entities/moderator";
-import { Role } from "../entities/role";
-import type { User } from "../entities/user";
+import { User } from "../entities/user";
 
 export default class LoginService {
   public async login(email: string, password: string): Promise<User> {
@@ -10,8 +6,7 @@ export default class LoginService {
 
     if (user) {
       if (user.password === password) {
-        const User = this.getConstructorByRole(user.role);
-        return User.from(user);
+        return User.check(user);
       }
 
       throw new Error("Wrong password");
@@ -28,16 +23,5 @@ export default class LoginService {
 
   private fetch(): Promise<any> {
     return import("../mocks/users.json");
-  }
-
-  getConstructorByRole(role: Role) {
-    switch (role) {
-      case Role.ADMIN:
-        return Admin;
-      case Role.CLIENT:
-        return Client;
-      case Role.MODERATOR:
-        return Moderator;
-    }
   }
 }

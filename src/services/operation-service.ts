@@ -1,11 +1,10 @@
-import or from "../utils/or";
 import UserService from "./user-service";
 import { Role } from "../entities/role";
 import { Admin } from "../entities/admin";
 import { Client } from "../entities/client";
 import { Moderator } from "../entities/moderator";
 import { Operation } from "../entities/operation";
-import type { User } from "../entities/user";
+import { User } from "../entities/user";
 import type { OperationToRole } from "../entities/operations-to-role";
 import type { UserForOperation } from "../utils/user-for-operation";
 
@@ -20,15 +19,14 @@ export default class OperationService {
 
   runOperationFor(user: User, operation: Operation) {
     if (this.isUpdateToModeratorOperation(operation)) {
-      const adminOrClient = or(Admin, Client);
-      return this.runUpdateToModeratorOperation(adminOrClient(user));
+      return this.runUpdateToModeratorOperation(Admin.Or(Client).check(user));
     }
 
     if (this.isUpdateToClientOperation(operation)) {
-      return this.runUpdateToClientOperation(Moderator.of(user));
+      return this.runUpdateToClientOperation(Moderator.check(user));
     }
 
-    return this.runUpdateToAdminOperation(Moderator.of(user));
+    return this.runUpdateToAdminOperation(Moderator.check(user));
   }
 
   isUpdateToAdminOperation(operation: Operation): operation is Operation.UPDATE_TO_ADMIN {

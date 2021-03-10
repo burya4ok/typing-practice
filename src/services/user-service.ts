@@ -1,10 +1,9 @@
 import { Role } from "../entities/role";
 import { Admin } from "../entities/admin";
 import { Client } from "../entities/client";
-import { Moderator } from "../entities/moderator";
 import { Operation } from "../entities/operation";
-import type { User } from "../entities/user";
-import type { RoleToUser } from "../entities/role-to-user";
+import { User } from "../entities/user";
+import { castTo, RoleToUser } from "../entities/role-to-user";
 
 export default class UserService {
   private users: readonly User[] = [];
@@ -15,8 +14,7 @@ export default class UserService {
     }
     const response = await this.fetch();
     this.users = response.default.map((u: any) => {
-      const User = this.getConstructorByRole(u.role);
-      return User.from(u);
+      return User.check(u);
     });
     return this.users;
   }
@@ -25,30 +23,19 @@ export default class UserService {
     return import("../mocks/users.json");
   }
 
-  async updateUserRole<R extends Role>(user: Readonly<RoleToUser[R]>, newRole: R) {
-    const User = this.getConstructorByRole(newRole);
-    this.users = this.users.map((u) => (u.id === user.id ? User.from(u) : u));
+  async updateUserRole<R extends Role>(user: RoleToUser[R], newRole: R) {
+    const newUser = castTo(newRole, user);
+    this.users = this.users.map((u) => (u.id === user.id ? newUser : u));
     return this.users;
   }
 
   getAvailableOperations(user: User, currentUser: User): Operation[] {
     // Вам нужно поменять логику внутри getAvailableOperations для того, что бы это работало с логином
     // throw new Error("Not Implemented")
-    if (user instanceof Admin || user instanceof Client) {
+    if (Admin.guard(user) || Client.guard(user)) {
       return [Operation.UPDATE_TO_MODERATOR];
     }
 
     return [Operation.UPDATE_TO_CLIENT, Operation.UPDATE_TO_ADMIN];
-  }
-
-  getConstructorByRole(role: Role) {
-    switch (role) {
-      case Role.ADMIN:
-        return Admin;
-      case Role.CLIENT:
-        return Client;
-      case Role.MODERATOR:
-        return Moderator;
-    }
   }
 }
