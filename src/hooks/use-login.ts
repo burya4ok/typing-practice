@@ -1,9 +1,8 @@
 import Services from "../services";
 import { navigate } from "@reach/router";
-import { useContext, useEffect, useCallback } from "react";
+import { useContext, useEffect } from "react";
 import { LogedInActionType, LogedInUser } from "../providers/loged-in-user";
 import type { User } from "../entities/user";
-import { Client } from "../entities/client";
 import { Role } from "../entities/role";
 
 export type Credentials = {
