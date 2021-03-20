@@ -1,7 +1,7 @@
 import { User } from "../entities/user";
 
 const PASSWORD_ERROR_MESSAGE = "Wrong password";
-const NOT_FOUND_USER_ERROR_MESSAGE = "Wrong password";
+const NOT_FOUND_USER_ERROR_MESSAGE = "User not found";
 
 export default class LoginService {
   public async login(email: string, password: string): Promise<User> {
