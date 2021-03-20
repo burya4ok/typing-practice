@@ -15,14 +15,6 @@ export default function useLogin(credentials: Credentials | null): User | null {
   const { loginService } = useContext(Services);
   const { dispatch, state = { user: null } } = useContext(LogedInUser);
 
-  const accessByRoleCheck = useCallback((user: User): User => {
-    if (Client.check(user)) {
-      throw new Error("Client doesn`t have access to the dashboard");
-    }
-
-    return user;
-  }, []);
-
   useEffect(() => {
     if (!credentials || !dispatch) {
       return;
@@ -32,7 +24,7 @@ export default function useLogin(credentials: Credentials | null): User | null {
       .login(credentials.email, credentials.password)
       .then((user: User) => dispatch!({ type: LogedInActionType.LOG_IN, payload: user }))
       .catch((e) => alert(e.message));
-  }, [accessByRoleCheck, credentials, dispatch, loginService]);
+  }, [credentials, dispatch, loginService]);
 
   useEffect(() => {
     if (state.user) {
@@ -43,7 +35,7 @@ export default function useLogin(credentials: Credentials | null): User | null {
           break;
         }
         default: {
-          alert("Client doesn`t have access to the dashboard");
+          alert(`${state.user.email} with role: ${state.user.role} doesn't have access to the dashboard`);
         }
       }
     }

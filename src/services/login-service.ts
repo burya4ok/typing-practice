@@ -1,5 +1,8 @@
 import { User } from "../entities/user";
 
+const PASSWORD_ERROR_MESSAGE = "Wrong password";
+const NOT_FOUND_USER_ERROR_MESSAGE = "Wrong password";
+
 export default class LoginService {
   public async login(email: string, password: string): Promise<User> {
     const user = await this.findByEmail(email);
@@ -9,10 +12,10 @@ export default class LoginService {
         return User.check(user);
       }
 
-      throw new Error("Wrong password");
+      throw new Error(PASSWORD_ERROR_MESSAGE);
     }
 
-    throw new Error("User not found");
+    throw new Error(NOT_FOUND_USER_ERROR_MESSAGE);
   }
 
   private async findByEmail(email: string) {
