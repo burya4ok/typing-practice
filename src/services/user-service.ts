@@ -1,6 +1,7 @@
 import { Role } from "../entities/role";
 import { Admin } from "../entities/admin";
 import { Client } from "../entities/client";
+import { Moderator } from "../entities/moderator";
 import { Operation } from "../entities/operation";
 import { User } from "../entities/user";
 import { castTo, RoleToUser } from "../entities/role-to-user";
@@ -30,12 +31,24 @@ export default class UserService {
   }
 
   getAvailableOperations(user: User, currentUser: User): Operation[] {
-    // Вам нужно поменять логику внутри getAvailableOperations для того, что бы это работало с логином
-    // throw new Error("Not Implemented")
-    if (Admin.guard(user) || Client.guard(user)) {
-      return [Operation.UPDATE_TO_MODERATOR];
+    if (Admin.guard(currentUser)) {
+      if (Admin.guard(user) || Client.guard(user)) {
+        return [Operation.UPDATE_TO_MODERATOR];
+      }
+
+      return [Operation.UPDATE_TO_CLIENT, Operation.UPDATE_TO_ADMIN];
     }
 
-    return [Operation.UPDATE_TO_CLIENT, Operation.UPDATE_TO_ADMIN];
+    if (Moderator.guard(currentUser)) {
+      if (Client.guard(user)) {
+        return [Operation.UPDATE_TO_MODERATOR];
+      }
+
+      if (Moderator.guard(user)) {
+        return [Operation.UPDATE_TO_CLIENT];
+      }
+    }
+
+    return [];
   }
 }
